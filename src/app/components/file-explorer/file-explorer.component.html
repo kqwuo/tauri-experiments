@@ -1,5 +1,5 @@
 <ul>
-  <li *ngFor="let item of itemList; let idx = index" (click)="selectItem(item)">
+  <li *ngFor="let item of itemList; let idx = index" (click)="selectItem($event, item)">
     {{item.name}}
     <app-file-explorer *ngIf="item.children && item.children.length > 0" [(item)]="itemList[idx]" ></app-file-explorer>
   </li>

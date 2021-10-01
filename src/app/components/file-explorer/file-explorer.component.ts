@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FileEntry, readDir } from "@tauri-apps/api/fs";
+import { WebviewWindow } from '@tauri-apps/api/window';
 
 @Component({
   selector: 'app-file-explorer',
@@ -24,12 +25,27 @@ export class FileExplorerComponent implements OnInit {
     }
   }
 
-  public async selectItem(item: FileEntry): Promise<void> {
+  public async selectItem(event: MouseEvent, item: FileEntry): Promise<void> {
     if (item.children !== undefined && item.children.length === 0) {
       item.children = await this.openFolder(item.path);
     } else {
-      // open file
-      this.selectedItem.emit(item);
+      if (event.shiftKey) {
+        // open new window
+        const webview = new WebviewWindow('theUniqueLabel', {
+          url: `http://localhost:4200`
+        });
+
+        setTimeout( async () => {
+          const webview2 = new WebviewWindow('theUniqueLabel', {
+            url: `http://localhost:4200`
+          });
+          await webview2.emit('open', item.path);
+        }, 1000);
+
+      } else {
+        // open file in current window
+        this.selectedItem.emit(item);
+      }
     }
   }
 
