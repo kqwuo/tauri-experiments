@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FileEntry } from '@tauri-apps/api/fs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'tauri-app';
+  public title = 'tauri-app';
+  public selectedFile: FileEntry | undefined;
+
+  public selectItem(item: FileEntry) {
+    this.selectedFile = item;
+  }
 }

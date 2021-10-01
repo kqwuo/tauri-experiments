@@ -1,0 +1,6 @@
+<ng-component *ngIf="item!.children !== undefined">
+  <li nz-submenu [nzTitle]="item!.name ?? ''">
+    <app-file-explorer-item *ngFor="child of item!.children"></app-file-explorer-item>
+  </li>
+</ng-component>
+<ng-component *ngIf="item!.children !== undefined"></ng-component>
